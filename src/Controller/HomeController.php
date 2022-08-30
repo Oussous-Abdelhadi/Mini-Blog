@@ -18,7 +18,7 @@ class HomeController extends AbstractController
         $article = new Article;
         $article->setTitre('titre1')
                 ->setDescription('description')
-                ->setAuthor('dads')
+                ->setAuteur('dads')
                 ->setVideo('https://www.youtube.com/watch?v=V4NK5UXaiAA&ab_channel=ThomasMouchelet')
         ;
         return $this->render('home/index.html.twig', [

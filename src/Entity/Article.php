@@ -15,13 +15,13 @@ class Article
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
-    private ?string $Titre = null;
+    private ?string $titre = null;
 
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $description = null;
 
     #[ORM\Column(length: 255)]
-    private ?string $author = null;
+    private ?string $auteur = null;
 
     #[ORM\Column(length: 255)]
     private ?string $video = null;
@@ -36,12 +36,12 @@ class Article
 
     public function getTitre(): ?string
     {
-        return $this->Titre;
+        return $this->titre;
     }
 
-    public function setTitre(string $Titre): self
+    public function setTitre(string $titre): self
     {
-        $this->Titre = $Titre;
+        $this->titre = $titre;
 
         return $this;
     }
@@ -58,14 +58,14 @@ class Article
         return $this;
     }
 
-    public function getAuthor(): ?string
+    public function getAuteur(): ?string
     {
-        return $this->author;
+        return $this->auteur;
     }
 
-    public function setAuthor(string $author): self
+    public function setAuteur(string $auteur): self
     {
-        $this->author = $author;
+        $this->auteur = $auteur;
 
         return $this;
     }
