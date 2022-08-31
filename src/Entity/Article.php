@@ -29,6 +29,9 @@ class Article
     #[ORM\Column(type: Types::DATE_MUTABLE, nullable: true)]
     private ?\DateTimeInterface $date = null;
 
+    #[ORM\Column(nullable: true)]
+    private ?bool $publie = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -90,6 +93,18 @@ class Article
     public function setDate(?\DateTimeInterface $date): self
     {
         $this->date = $date;
+
+        return $this;
+    }
+
+    public function isPublie(): ?bool
+    {
+        return $this->publie;
+    }
+
+    public function setPublie(?bool $publie): self
+    {
+        $this->publie = $publie;
 
         return $this;
     }

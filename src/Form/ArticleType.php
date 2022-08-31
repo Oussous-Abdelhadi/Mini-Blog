@@ -4,6 +4,7 @@ namespace App\Form;
 
 use App\Entity\Article;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -38,6 +39,12 @@ class ArticleType extends AbstractType
                 ]
             ])
             ->add('date', DateType::class)
+            ->add('publie', CheckboxType::class,[
+                "attr" => [
+                    "class" => "form-check-input",
+                ],
+                "required" => false
+            ])
         ;
     }
 
