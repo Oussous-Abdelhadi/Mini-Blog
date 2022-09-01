@@ -15,7 +15,8 @@ class ArticleController extends AbstractController
 {
     /**
      * @Route("/article/new", name="article_new")
-     * 
+     * @param Request ,ManagerRegistry
+     * @return Response
      */
 
     public function new(Request $request, ManagerRegistry $doctrine): Response
@@ -33,6 +34,28 @@ class ArticleController extends AbstractController
             return $this->redirectToRoute('home');
         }
         return $this->render('article/new.html.twig', [
+            "form" => $form->createView()
+        ]);
+    }
+
+    /**
+     * @Route("article/{id}/edit", name="article_edit")
+     * @param Article Request
+     * @return Response
+     */
+    public function edit(Article $article, Request $request, ManagerRegistry $doctrine): Response
+    {
+        $form = $this->createForm(ArticleType::class, $article);
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid())
+        {
+            $em = $doctrine->getManager();
+            $em->flush();
+            return $this->redirectToRoute('home');
+        }
+        return $this->render('article/edit.html.twig', [
             "form" => $form->createView()
         ]);
     }

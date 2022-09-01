@@ -5,7 +5,6 @@ namespace App\Form;
 use App\Entity\Article;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
-use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\UrlType;
@@ -27,18 +26,11 @@ class ArticleType extends AbstractType
                     "class" => "form-control"
                 ]
             ])
-            ->add('auteur', TextType::class,[
-                "attr" => [
-                    "class" => "form-control"
-                ]
-            ]
-            )
             ->add('video', UrlType::class, [
                 "attr" => [
                     "class" => "form-control"
                 ]
             ])
-            ->add('date', DateType::class)
             ->add('publie', CheckboxType::class,[
                 "attr" => [
                     "class" => "form-check-input",
