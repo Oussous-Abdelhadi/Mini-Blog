@@ -9,10 +9,23 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Doctrine\Persistence\ManagerRegistry;
-
+use Symfony\Component\HttpFoundation\RedirectResponse;
 
 class ArticleController extends AbstractController
 {
+
+    /**
+     * @Route("article/{id}/show", name="article_show")
+     * @param Article
+     * @return Response
+     */
+    public function show(Article $article): Response
+    {
+        return $this->render('article/show.html.twig',[
+            'article' => $article,
+            ]);
+    }
+    
     /**
      * @Route("/article/new", name="article_new")
      * @param Request ,ManagerRegistry
@@ -59,5 +72,18 @@ class ArticleController extends AbstractController
             "form" => $form->createView()
         ]);
     }
-}
 
+        /**
+     * 
+     * @Route("article/{id}/delete", name="article_delete")
+     */
+
+    public function delete(Article $article, Request $request, ManagerRegistry $doctrine): RedirectResponse
+    {
+        $em = $doctrine->getManager();
+        $em->remove($article);
+        $em->flush();
+
+        return $this->redirectToRoute('home');
+    }
+}
