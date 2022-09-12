@@ -21,10 +21,10 @@ class Comment
     private ?\DateTimeInterface $createdAt = null;
 
     #[ORM\ManyToOne(inversedBy: 'comments')]
-    private ?User $user = null;
+    private ?Article $article = null;
 
     #[ORM\ManyToOne(inversedBy: 'comments')]
-    private ?Article $article = null;
+    private ?User $user = null;
 
     public function getId(): ?int
     {
@@ -55,18 +55,6 @@ class Comment
         return $this;
     }
 
-    public function getUser(): ?User
-    {
-        return $this->user;
-    }
-
-    public function setUser(?User $user): self
-    {
-        $this->user = $user;
-
-        return $this;
-    }
-
     public function getArticle(): ?Article
     {
         return $this->article;
@@ -75,6 +63,18 @@ class Comment
     public function setArticle(?Article $article): self
     {
         $this->article = $article;
+
+        return $this;
+    }
+
+    public function getUser(): ?User
+    {
+        return $this->user;
+    }
+
+    public function setUser(?User $user): self
+    {
+        $this->user = $user;
 
         return $this;
     }
