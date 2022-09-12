@@ -18,16 +18,13 @@ class Article
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
-    private ?string $titre = null;
+    private ?string $title = null;
 
-    #[ORM\Column(type: Types::TEXT, nullable: true)]
+    #[ORM\Column(type: Types::TEXT)]
     private ?string $description = null;
 
     #[ORM\Column(length: 255)]
-    private ?string $video = null;
-
-    #[ORM\Column(nullable: true)]
-    private ?bool $publie = null;
+    private ?string $url = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     private ?\DateTimeInterface $createdAt = null;
@@ -41,10 +38,13 @@ class Article
     #[ORM\OneToMany(mappedBy: 'article', targetEntity: Comment::class)]
     private Collection $comments;
 
+    #[ORM\Column]
+    private ?bool $published = null;
+
     public function __construct()
     {
-        $this->createdAt = new DateTime();
         $this->comments = new ArrayCollection();
+        $this->createdAt = new DateTime();
     }
 
     public function getId(): ?int
@@ -52,14 +52,14 @@ class Article
         return $this->id;
     }
 
-    public function getTitre(): ?string
+    public function getTitle(): ?string
     {
-        return $this->titre;
+        return $this->title;
     }
 
-    public function setTitre(string $titre): self
+    public function setTitle(string $title): self
     {
-        $this->titre = $titre;
+        $this->title = $title;
 
         return $this;
     }
@@ -69,45 +69,21 @@ class Article
         return $this->description;
     }
 
-    public function setDescription(?string $description): self
+    public function setDescription(string $description): self
     {
         $this->description = $description;
 
         return $this;
     }
 
-    public function getAuteur(): ?string
+    public function getUrl(): ?string
     {
-        return $this->auteur;
+        return $this->url;
     }
 
-    public function setAuteur(string $auteur): self
+    public function setUrl(string $url): self
     {
-        $this->auteur = $auteur;
-
-        return $this;
-    }
-
-    public function getVideo(): ?string
-    {
-        return $this->video;
-    }
-
-    public function setVideo(string $video): self
-    {
-        $this->video = $video;
-
-        return $this;
-    }
-
-    public function isPublie(): ?bool
-    {
-        return $this->publie;
-    }
-
-    public function setPublie(?bool $publie): self
-    {
-        $this->publie = $publie;
+        $this->url = $url;
 
         return $this;
     }
@@ -174,6 +150,18 @@ class Article
                 $comment->setArticle(null);
             }
         }
+
+        return $this;
+    }
+
+    public function isPublished(): ?bool
+    {
+        return $this->published;
+    }
+
+    public function setPublished(bool $published): self
+    {
+        $this->published = $published;
 
         return $this;
     }

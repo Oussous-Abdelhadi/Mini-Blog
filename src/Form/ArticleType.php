@@ -16,7 +16,7 @@ class ArticleType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('titre' ,TextType::class, [
+            ->add('title' ,TextType::class, [
                 "attr" => [ 
                     "class" => "form-control"
                     ]
@@ -26,12 +26,12 @@ class ArticleType extends AbstractType
                     "class" => "form-control"
                 ]
             ])
-            ->add('video', UrlType::class, [
+            ->add('url', UrlType::class, [
                 "attr" => [
                     "class" => "form-control"
                 ]
             ])
-            ->add('publie', CheckboxType::class,[
+            ->add('published', CheckboxType::class,[
                 "attr" => [
                     "class" => "form-check-input",
                 ],
