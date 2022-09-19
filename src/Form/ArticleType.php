@@ -31,9 +31,9 @@ class ArticleType extends AbstractType
                     "class" => "form-control"
                 ]
             ])
-            ->add('published', CheckboxType::class,[
+            ->add('published', TextType::class,[
                 "attr" => [
-                    "class" => "form-check-input",
+                    "class" => "yes",
                 ],
                 "required" => false
             ])

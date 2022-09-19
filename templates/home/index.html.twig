@@ -3,52 +3,96 @@
 {% block title %}Hello HomeController!{% endblock %}
 
 {% block body %}
-<section class="py-5 text-center container">
-  <div class="row py-lg-5">
-    <div class="col-lg-6 col-md-8 mx-auto">
-      <h1 class="fw-light">Tutoriel informatique</h1>
-      <p class="lead text-muted"></p>
-      <p>
-        <a href="#" class="btn btn-primary my-2">Main call to action</a>
-        <a href="#" class="btn btn-secondary my-2">Secondary action</a>
-      </p>
-    </div>
-  </div>
-</section>
 
-<div class="album py-5 bg-light">
-    <div class="container">
-      <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
-        {% for article in articles %}
-        <div class="col">
-          <div class="card shadow-sm">
-            <iframe src="{{article.url}}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-            <div class="card-body">
-              <p class="card-text"><strong>{{ article.title }}</strong></p>
-              <p class="card-text">{{ article.description|slice(0, 80) }}...</p>
-              <div class="d-flex justify-content-between align-items-center">
-                <div class="btn-group">
-                  <a href="{{ path('article_show', {"id": article.id}) }}" class="btn btn-sm btn-outline-secondary">Voir</a>
-                  <a href="{{ path('article_edit', {"id": article.id}) }}" class="btn btn-sm btn-outline-secondary">Modifier</a>
-                  <a href="{{ path('article_delete', {"id": article.id}) }}" onclick="return confirm('Vous voulez vraiment supprimer cette article?')" class="btn btn-sm btn-outline-secondary">Supprimer</a>
-                </div>
-                <small class="text-muted">{{ article.createdAt|date("d/m/Y") }}</small>
-              </div>
-            </div>
-          </div>
-        </div>
-        {% endfor %}
-      </div>
-    </div>
-  </div>
+				<!-- Main -->
+					<div id="main">
 
-  <footer class="text-muted py-5">
-    <div class="container">
-      <p class="float-end mb-1">
-        <a href="#">Back to top</a>
-      </p>
-      <p class="mb-1">Album example is &copy; Bootstrap, but please download and customize it for yourself!</p>
-      <p class="mb-0">New to Bootstrap? <a href="/">Visit the homepage</a> or read our <a href="/docs/5.2/getting-started/introduction/">getting started guide</a>.</p>
-    </div>
-  </footer>
+						<!-- Post -->
+							<article class="post">
+								<header>
+									<div class="title">
+										<h2><a href="single.html">Magna sed adipiscing</a></h2>
+										<p>Lorem ipsum dolor amet nullam consequat etiam feugiat</p>
+									</div>
+									<div class="meta">
+										<time class="published" datetime="2015-11-01">November 1, 2015</time>
+										<a href="#" class="author"><span class="name">Jane Doe</span><img src=" {{asset('assets/front/images/avatar.jpg')}}" alt="" /></a>
+									</div>
+								</header>
+								<a href="single.html" class="image featured"><img src="{{asset('assets/front/images/avatar.jpg')}}" alt="" /></a>
+								<p>Mauris neque quam, fermentum ut nisl vitae, convallis maximus nisl. Sed mattis nunc id lorem euismod placerat. Vivamus porttitor magna enim, ac accumsan tortor cursus at. Phasellus sed ultricies mi non congue ullam corper. Praesent tincidunt sed tellus ut rutrum. Sed vitae justo condimentum, porta lectus vitae, ultricies congue gravida diam non fringilla.</p>
+								<footer>
+									<ul class="actions">
+										<li><a href="single.html" class="button large">Continue Reading</a></li>
+									</ul>
+									<ul class="stats">
+										<li><a href="#">General</a></li>
+										<li><a href="#" class="icon solid fa-heart">28</a></li>
+										<li><a href="#" class="icon solid fa-comment">128</a></li>
+									</ul>
+								</footer>
+							</article>
+
+						<!-- Pagination -->
+							<ul class="actions pagination">
+								<li><a href="" class="disabled button large previous">Previous Page</a></li>
+								<li><a href="#" class="button large next">Next Page</a></li>
+							</ul>
+
+					</div>
+
+				<!-- Sidebar -->
+					<section id="sidebar">
+
+						<!-- Intro -->
+							<section id="intro">
+								<a href="#" class="logo"><img src="{{asset('assets/front/images/logo.jpg')}}" alt="" /></a>
+								<header>
+									<h2>Future Imperfect</h2>
+									<p>Another fine responsive site template by <a href="http://html5up.net">HTML5 UP</a></p>
+								</header>
+							</section>
+
+						<!-- Mini Posts -->
+							<section>
+								<div class="mini-posts">
+
+									<!-- Mini Post -->
+										<article class="mini-post">
+											<header>
+												<h3><a href="single.html">Vitae sed condimentum</a></h3>
+												<time class="published" datetime="2015-10-20">October 20, 2015</time>
+												<a href="#" class="author"><img src="{{asset('assets/front/images/avatar.jpg')}}" alt="" /></a>
+											</header>
+											<a href="single.html" class="image"><img src="{{asset('assets/front/images/avatar.jpg')}}" alt="" /></a>
+										</article>
+
+								</div>
+							</section>
+
+						<!-- Posts List -->
+							<section>
+								<ul class="posts">
+									<li>
+										<article>
+											<header>
+												<h3><a href="single.html">Lorem ipsum fermentum ut nisl vitae</a></h3>
+												<time class="published" datetime="2015-10-20">October 20, 2015</time>
+											</header>
+											<a href="single.html" class="image"><img src="{{asset('assets/front/images/avatar.jpg')}}" alt="" /></a>
+										</article>
+									</li>
+								
+								</ul>
+							</section>
+
+						<!-- About -->
+							<section class="blurb">
+								<h2>About</h2>
+								<p>Mauris neque quam, fermentum ut nisl vitae, convallis maximus nisl. Sed mattis nunc id lorem euismod amet placerat. Vivamus porttitor magna enim, ac accumsan tortor cursus at phasellus sed ultricies.</p>
+								<ul class="actions">
+									<li><a href="#" class="button">Learn More</a></li>
+								</ul>
+							</section>
+
 {% endblock %}

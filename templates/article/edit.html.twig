@@ -4,10 +4,11 @@
 {% endblock title %}
 
 {% block body %}
-<div class="container">
+<div id="main">
     <h1>Modifier un article</h1>
     {{ form_start(form) }}
     {% include "form/form.html.twig" %}
+    <br>
     <button  class="btn btn-primary">Modifier</button>
     {{ form_end(form) }}
 </div>

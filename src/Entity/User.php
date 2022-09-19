@@ -3,12 +3,14 @@
 namespace App\Entity;
 
 use App\Repository\UserRepository;
+use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 class User implements UserInterface, PasswordAuthenticatedUserInterface
@@ -17,18 +19,31 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\GeneratedValue]
     #[ORM\Column]
     private ?int $id = null;
-
+    
+    /**
+     * @Assert\NotBlank()
+     */
     #[ORM\Column(length: 180, unique: true)]
     private ?string $username = null;
-
-    #[ORM\Column]
-    private array $roles = [];
-
+    /**
+     * @Assert\Email()
+     * @Assert\NotBlank()
+     * 
+     */
+    #[ORM\Column(length: 255)]
+    private ?string $email = null;
+    
     /**
      * @var string The hashed password
+     * @Assert\NotBlank()
+     * 
      */
     #[ORM\Column]
     private ?string $password = null;
+
+
+    #[ORM\Column]
+    private array $roles = [];
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     private ?\DateTimeInterface $createdAt = null;
@@ -42,8 +57,15 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(mappedBy: 'user', targetEntity: Article::class)]
     private Collection $articles;
 
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $token = null;
+
+
     public function __construct()
     {
+        $this->roles = ['ROLE_USER'];
+        $this->createdAt = new DateTime();
+        $this->enabled = false;
         $this->comments = new ArrayCollection();
         $this->articles = new ArrayCollection();
     }
@@ -198,6 +220,30 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
                 $article->setUser(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getToken(): ?string
+    {
+        return $this->token;
+    }
+
+    public function setToken(?string $token): self
+    {
+        $this->token = $token;
+
+        return $this;
+    }
+
+    public function getEmail(): ?string
+    {
+        return $this->email;
+    }
+
+    public function setEmail(string $email): self
+    {
+        $this->email = $email;
 
         return $this;
     }
