@@ -1,37 +1,38 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello HomeController!{% endblock %}
+{% block title %}Accueil{% endblock %}
 
 {% block body %}
 
 				<!-- Main -->
 					<div id="main">
-
 						<!-- Post -->
-							<article class="post">
-								<header>
-									<div class="title">
-										<h2><a href="single.html">Magna sed adipiscing</a></h2>
-										<p>Lorem ipsum dolor amet nullam consequat etiam feugiat</p>
-									</div>
-									<div class="meta">
-										<time class="published" datetime="2015-11-01">November 1, 2015</time>
-										<a href="#" class="author"><span class="name">Jane Doe</span><img src=" {{asset('assets/front/images/avatar.jpg')}}" alt="" /></a>
-									</div>
-								</header>
-								<a href="single.html" class="image featured"><img src="{{asset('assets/front/images/avatar.jpg')}}" alt="" /></a>
-								<p>Mauris neque quam, fermentum ut nisl vitae, convallis maximus nisl. Sed mattis nunc id lorem euismod placerat. Vivamus porttitor magna enim, ac accumsan tortor cursus at. Phasellus sed ultricies mi non congue ullam corper. Praesent tincidunt sed tellus ut rutrum. Sed vitae justo condimentum, porta lectus vitae, ultricies congue gravida diam non fringilla.</p>
-								<footer>
-									<ul class="actions">
-										<li><a href="single.html" class="button large">Continue Reading</a></li>
-									</ul>
-									<ul class="stats">
-										<li><a href="#">General</a></li>
-										<li><a href="#" class="icon solid fa-heart">28</a></li>
-										<li><a href="#" class="icon solid fa-comment">128</a></li>
-									</ul>
-								</footer>
-							</article>
+						{% for article in articles %}
+						<article class="post">
+							<header>
+								<div class="title">
+									<h2><a href="{{ path('article_show', {'id': article.id})}}">{{article.title}}</a></h2>
+									<p>{{article.description|slice(0, 80)}}...</p>
+								</div>
+								<div class="meta">
+									<time class="published" datetime="2015-11-01">{{article.createdAt|date("j F,Y")}}</time>
+									<a href="#" class="author"><span class="name">Jane Doe</span><img src=" {{asset('assets/front/images/avatar.jpg')}}" alt="" /></a>
+								</div>
+							</header>
+							<a href="{{ path('article_show', {'id': article.id})}}" class="image featured"><img src="{{asset('assets/front/images/pp.jpg')}}" alt="" /></a>
+							<p>Mauris neque quam, fermentum ut nisl vitae, convallis maximus nisl. Sed mattis nunc id lorem euismod placerat. Vivamus porttitor magna enim, ac accumsan tortor cursus at. Phasellus sed ultricies mi non congue ullam corper. Praesent tincidunt sed tellus ut rutrum. Sed vitae justo condimentum, porta lectus vitae, ultricies congue gravida diam non fringilla.</p>
+							<footer>
+								<ul class="actions">
+									<li><a href="{{ path('article_show', {'id': article.id})}}" class="button large">Continuez</a></li>
+								</ul>
+								<ul class="stats">
+									<li><a href="#">General</a></li>
+									<li><a href="#" class="icon solid fa-heart">28</a></li>
+									<li><a href="#" class="icon solid fa-comment">128</a></li>
+								</ul>
+							</footer>
+						</article>
+						{% endfor %}
 
 						<!-- Pagination -->
 							<ul class="actions pagination">
@@ -43,10 +44,16 @@
 
 				<!-- Sidebar -->
 					<section id="sidebar">
-
 						<!-- Intro -->
-							<section id="intro">
-								<a href="#" class="logo"><img src="{{asset('assets/front/images/logo.jpg')}}" alt="" /></a>
+						<section id="intro">
+								{% for label, messages in app.flashes(['success', 'error']) %}
+									{% for message in messages %}
+										<div class="flash-{{ label }}" style="font-weight: bold;color: red;">
+											{{ message }}
+										</div>
+									{% endfor %}
+								{% endfor %}
+								<a href="#" class="logo"><img src="{{asset('assets/front/images/logo.png')}}" alt="" /></a>
 								<header>
 									<h2>Future Imperfect</h2>
 									<p>Another fine responsive site template by <a href="http://html5up.net">HTML5 UP</a></p>
@@ -88,10 +95,10 @@
 
 						<!-- About -->
 							<section class="blurb">
-								<h2>About</h2>
+								<h2>À propos</h2>
 								<p>Mauris neque quam, fermentum ut nisl vitae, convallis maximus nisl. Sed mattis nunc id lorem euismod amet placerat. Vivamus porttitor magna enim, ac accumsan tortor cursus at phasellus sed ultricies.</p>
 								<ul class="actions">
-									<li><a href="#" class="button">Learn More</a></li>
+									<li><a href="{{ path('about') }}" class="button">En savoir plus</a></li>
 								</ul>
 							</section>
 
