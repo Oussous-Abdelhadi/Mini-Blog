@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Repository\CommentRepository;
+use DateTime;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -23,8 +24,13 @@ class Comment
     #[ORM\ManyToOne(inversedBy: 'comments')]
     private ?Article $article = null;
 
-    #[ORM\ManyToOne(inversedBy: 'comments')]
-    private ?User $user = null;
+    #[ORM\Column(length: 255)]
+    private ?string $username = null;
+
+    public function __construct()
+    {
+        $this->createdAt = new DateTime();
+    }
 
     public function getId(): ?int
     {
@@ -67,14 +73,14 @@ class Comment
         return $this;
     }
 
-    public function getUser(): ?User
+    public function getUsername(): ?string
     {
-        return $this->user;
+        return $this->username;
     }
 
-    public function setUser(?User $user): self
+    public function setUsername(string $username): self
     {
-        $this->user = $user;
+        $this->username = $username;
 
         return $this;
     }

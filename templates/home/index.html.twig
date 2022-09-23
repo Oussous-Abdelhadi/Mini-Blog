@@ -8,6 +8,7 @@
 					<div id="main">
 						<!-- Post -->
 						{% for article in articles %}
+						{% set comments =  article.comments.snapshot %}
 						<article class="post">
 							<header>
 								<div class="title">
@@ -16,19 +17,23 @@
 								</div>
 								<div class="meta">
 									<time class="published" datetime="2015-11-01">{{article.createdAt|date("j F,Y")}}</time>
-									<a href="#" class="author"><span class="name">Jane Doe</span><img src=" {{asset('assets/front/images/avatar.jpg')}}" alt="" /></a>
+									<a href="#" class="author"><span class="name">Abdelhadi</span><img src=" {{asset('assets/front/images/avatar.jpg')}}" alt="" /></a>
 								</div>
 							</header>
 							<a href="{{ path('article_show', {'id': article.id})}}" class="image featured"><img src="{{asset('assets/front/images/pp.jpg')}}" alt="" /></a>
-							<p>Mauris neque quam, fermentum ut nisl vitae, convallis maximus nisl. Sed mattis nunc id lorem euismod placerat. Vivamus porttitor magna enim, ac accumsan tortor cursus at. Phasellus sed ultricies mi non congue ullam corper. Praesent tincidunt sed tellus ut rutrum. Sed vitae justo condimentum, porta lectus vitae, ultricies congue gravida diam non fringilla.</p>
+							<p>{{article.description}}</p>
 							<footer>
 								<ul class="actions">
 									<li><a href="{{ path('article_show', {'id': article.id})}}" class="button large">Continuez</a></li>
 								</ul>
 								<ul class="stats">
-									<li><a href="#">General</a></li>
-									<li><a href="#" class="icon solid fa-heart">28</a></li>
-									<li><a href="#" class="icon solid fa-comment">128</a></li>
+									{% for categorie in categories %}
+										{% if categorie == article.category %}
+											<li><a href="#">{{categorie.name}}</a></li>
+										{% endif %}
+									{% endfor %}
+									<li><a href="#" class="icon solid fa-comment">{{ comments|length }}</a></li>
+									<br>
 								</ul>
 							</footer>
 						</article>
@@ -55,7 +60,7 @@
 								{% endfor %}
 								<a href="#" class="logo"><img src="{{asset('assets/front/images/logo.png')}}" alt="" /></a>
 								<header>
-									<h2>Future Imperfect</h2>
+									<h2>Blog</h2>
 									<p>Another fine responsive site template by <a href="http://html5up.net">HTML5 UP</a></p>
 								</header>
 							</section>
@@ -80,15 +85,18 @@
 						<!-- Posts List -->
 							<section>
 								<ul class="posts">
+									{% for article in articles %}
 									<li>
 										<article>
 											<header>
-												<h3><a href="single.html">Lorem ipsum fermentum ut nisl vitae</a></h3>
-												<time class="published" datetime="2015-10-20">October 20, 2015</time>
+												<h3><a href="single.html">{{ article.title }}</a></h3>
+												<time class="published" datetime="2015-10-20">{{ article.createdAt|date('j F,Y')}}</time>
 											</header>
 											<a href="single.html" class="image"><img src="{{asset('assets/front/images/avatar.jpg')}}" alt="" /></a>
 										</article>
 									</li>
+										
+									{% endfor %}
 								
 								</ul>
 							</section>

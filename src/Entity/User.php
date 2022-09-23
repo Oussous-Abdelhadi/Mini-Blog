@@ -51,9 +51,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column]
     private ?bool $enabled = null;
 
-    #[ORM\OneToMany(mappedBy: 'user', targetEntity: Comment::class)]
-    private Collection $comments;
-
     #[ORM\OneToMany(mappedBy: 'user', targetEntity: Article::class)]
     private Collection $articles;
 
@@ -170,28 +167,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function getComments(): Collection
     {
         return $this->comments;
-    }
-
-    public function addComment(Comment $comment): self
-    {
-        if (!$this->comments->contains($comment)) {
-            $this->comments->add($comment);
-            $comment->setUser($this);
-        }
-
-        return $this;
-    }
-
-    public function removeComment(Comment $comment): self
-    {
-        if ($this->comments->removeElement($comment)) {
-            // set the owning side to null (unless already changed)
-            if ($comment->getUser() === $this) {
-                $comment->setUser(null);
-            }
-        }
-
-        return $this;
     }
 
     /**

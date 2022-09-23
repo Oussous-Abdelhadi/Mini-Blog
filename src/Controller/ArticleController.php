@@ -3,7 +3,10 @@
 namespace App\Controller;
 
 use App\Entity\Article;
+use App\Entity\Comment;
 use App\Form\ArticleType;
+use App\Form\CommentType;
+use App\Repository\CommentRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -14,16 +17,38 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 class ArticleController extends AbstractController
 {
 
+    private $doctrine;
+
+    public function __construct(ManagerRegistry $doctrine)
+    {
+        $this->doctrine = $doctrine;
+    }
+
     /**
      * @Route("article/{id}/show", name="article_show")
-     * @param Article
-     * @return Response
      */
-    public function show(Article $article): Response
+    public function show(Article $article,
+     CommentRepository $commentRepository,
+      Request $request, $id): Response
     {
+        $comment = new Comment();
+        $form = $this->createForm(CommentType::class, $comment);
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $comment->setArticle($article);
+            $em = $this->doctrine->getManager();
+            $em->persist($comment);
+            $em->flush();
+            return $this->redirect($request->getUri());
+        }
+        $comments = $commentRepository->findBy(['article' =>  $article]);
         return $this->render('article/show.html.twig',[
+            'form' => $form->createView(),
             'article' => $article,
-            ]);
+            'comments' => $comments
+        ]);
     }
     
     /**
@@ -32,15 +57,15 @@ class ArticleController extends AbstractController
      * @return Response
      */
 
-    public function new(Request $request, ManagerRegistry $doctrine): Response
+    public function new(): Response
     {
         $article = new Article();
         $form = $this->createForm(ArticleType::class, $article);
 
-        $form->handleRequest($request);
+        $form->handleRequest($this->request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $em = $doctrine->getManager();
+            $em = $this->doctrine->getManager();
 
             $em->persist($article);
             $em->flush();
@@ -53,10 +78,10 @@ class ArticleController extends AbstractController
 
     /**
      * @Route("article/{id}/edit", name="article_edit")
-     * @param Article Request
+     * @param Article
      * @return Response
      */
-    public function edit(Article $article, Request $request, ManagerRegistry $doctrine): Response
+    public function edit(Article $article, Request $request): Response
     {
         $form = $this->createForm(ArticleType::class, $article);
 
@@ -64,7 +89,7 @@ class ArticleController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid())
         {
-            $em = $doctrine->getManager();
+            $em = $this->doctrinene->getManager();
             $em->flush();
             return $this->redirectToRoute('home');
         }
@@ -78,12 +103,11 @@ class ArticleController extends AbstractController
      * @Route("article/{id}/delete", name="article_delete")
      */
 
-    public function delete(Article $article, Request $request, ManagerRegistry $doctrine): RedirectResponse
+    public function delete(Article $article): RedirectResponse
     {
-        $em = $doctrine->getManager();
+        $em = $this->doctrine->getManager();
         $em->remove($article);
         $em->flush();
-
         return $this->redirectToRoute('home');
     }
 }
