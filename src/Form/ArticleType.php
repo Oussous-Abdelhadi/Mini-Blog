@@ -19,11 +19,13 @@ class ArticleType extends AbstractType
             ->add('title' ,TextType::class, [
                 "attr" => [ 
                     "class" => "form-control"
-                    ]
+                    ],
+                    "label" => "Titre"
             ])
             ->add('description', TextareaType::class,[
                 "attr" => [
-                    "class" => "form-control"
+                    "class" => "form-control",
+                "label" => "Publier"
                 ]
             ])
             ->add('url', UrlType::class, [
@@ -31,11 +33,12 @@ class ArticleType extends AbstractType
                     "class" => "form-control"
                 ]
             ])
-            ->add('published', TextType::class,[
+            ->add('published', CheckboxType::class,[
                 "attr" => [
-                    "class" => "yes",
+                    "class" => "",
                 ],
-                "required" => false
+                "required" => false,
+                "label" => "Publier"
             ])
         ;
     }

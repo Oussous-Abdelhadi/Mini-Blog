@@ -44,10 +44,12 @@ class ArticleController extends AbstractController
             return $this->redirect($request->getUri());
         }
         $comments = $commentRepository->findBy(['article' =>  $article]);
+        $status_login = $this->container->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_REMEMBERED');
         return $this->render('article/show.html.twig',[
             'form' => $form->createView(),
             'article' => $article,
-            'comments' => $comments
+            'comments' => $comments,
+            'status_login' => $status_login
         ]);
     }
     
@@ -57,12 +59,12 @@ class ArticleController extends AbstractController
      * @return Response
      */
 
-    public function new(): Response
+    public function new(Request $request): Response
     {
         $article = new Article();
         $form = $this->createForm(ArticleType::class, $article);
 
-        $form->handleRequest($this->request);
+        $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->doctrine->getManager();
@@ -71,8 +73,10 @@ class ArticleController extends AbstractController
             $em->flush();
             return $this->redirectToRoute('home');
         }
+        $status_login = $this->container->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_REMEMBERED');
         return $this->render('article/new.html.twig', [
-            "form" => $form->createView()
+            "form" => $form->createView(),
+            'status' => $status_login
         ]);
     }
 

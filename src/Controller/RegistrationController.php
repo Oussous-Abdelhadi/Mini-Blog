@@ -56,9 +56,10 @@ class RegistrationController extends AbstractController
             "Inscription réussi ! Vous allez recevoir un email de confirmation, vérifie également tes spam.");
             $this->mailer->sendEmail($user->getEmail(), $user->getToken());
         }
-
+        $status_login = $this->container->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_REMEMBERED');
         return $this->render('registration/register.html.twig', [
             'form' => $form->createView(),
+            'status_login' => $status_login
         ]);
     }
 

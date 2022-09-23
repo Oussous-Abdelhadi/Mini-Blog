@@ -14,6 +14,9 @@ class AboutController extends AbstractController
      */
     public function about(): Response
     {
-        return $this->render('about/about.html.twig');
+        $status_login = $this->container->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_REMEMBERED');
+        return $this->render('about/about.html.twig',[
+            'status_login' => $status_login
+        ]);
     }
 }

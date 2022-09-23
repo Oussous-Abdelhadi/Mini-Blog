@@ -17,13 +17,11 @@ class HomeController extends AbstractController
     {
         $articles = $articleRepository->findBy(["published" => true]);
         $categorys = $categoryRepository->findAll();
-        // dd($articles);
-        // foreach ($articles as $article) {
-        //     dd($article);
-        // }
+        $status_login = $this->container->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_REMEMBERED');
         return $this->render('home/index.html.twig', [
             'articles' => $articles, 
-            'categories' => $categorys
+            'categories' => $categorys,
+            'status_login' => $status_login
         ]);
     }
 }

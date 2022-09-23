@@ -1,4 +1,4 @@
-    <div class="form-group">
+    <div class="form-group ">
         {{ form_row(form.title) }}
     </div>
     <div class="form-group">
@@ -7,6 +7,7 @@
     <div class="form-group">
         {{ form_row(form.description) }}
     </div>
-    <div class="form-group">
-        {{ form_row(form.published )}}
+    <div class="form-check">
+        {{ form_widget(form.published )}}
+        {{ form_label(form.published )}}
     </div>
