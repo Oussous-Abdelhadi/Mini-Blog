@@ -51,9 +51,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column]
     private ?bool $enabled = null;
 
-    #[ORM\OneToMany(mappedBy: 'user', targetEntity: Article::class)]
-    private Collection $articles;
-
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $token = null;
 
@@ -65,6 +62,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->enabled = false;
         $this->comments = new ArrayCollection();
         $this->articles = new ArrayCollection();
+    }
+
+    public function __toString()
+    {
+        return $this->username;
     }
 
     public function getId(): ?int
@@ -175,28 +177,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function getArticles(): Collection
     {
         return $this->articles;
-    }
-
-    public function addArticle(Article $article): self
-    {
-        if (!$this->articles->contains($article)) {
-            $this->articles->add($article);
-            $article->setUser($this);
-        }
-
-        return $this;
-    }
-
-    public function removeArticle(Article $article): self
-    {
-        if ($this->articles->removeElement($article)) {
-            // set the owning side to null (unless already changed)
-            if ($article->getUser() === $this) {
-                $article->setUser(null);
-            }
-        }
-
-        return $this;
     }
 
     public function getToken(): ?string

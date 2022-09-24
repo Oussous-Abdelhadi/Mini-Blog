@@ -13,15 +13,17 @@
 							<header>
 								<div class="title">
 									<h2><a href="{{ path('article_show', {'id': article.id})}}">{{article.title}}</a></h2>
-									<p>{{article.description|slice(0, 80)}}...</p>
+									{# <p>{{article.description|slice(0, 80)}}...</p> #}
 								</div>
 								<div class="meta">
 									<time class="published" datetime="2015-11-01">{{article.createdAt|date("j F,Y")}}</time>
-									<a href="#" class="author"><span class="name">Abdelhadi</span><img src=" {{asset('assets/front/images/avatar.jpg')}}" alt="" /></a>
+									<a href="#" class="author"><span class="name">Abdelhadi</span><img src=" {{asset('assets/front/images/luffy.jpg')}}" alt="" /></a>
 								</div>
 							</header>
-							<a href="{{ path('article_show', {'id': article.id})}}" class="image featured"><img src="{{asset('assets/front/images/pp.jpg')}}" alt="" /></a>
-							<p>{{article.description}}</p>
+								<a href="{{ path('article_show', {'id': article.id})}}" class="image featured">
+									<img src="{{asset('assets/front/images/clavier.jpg')}}" alt="" />
+								</a>
+							<p>{{article.description|slice(0, 230)}}...</p>
 							<footer>
 								<ul class="actions">
 									<li><a href="{{ path('article_show', {'id': article.id})}}" class="button large">Continuez</a></li>
@@ -39,11 +41,7 @@
 						</article>
 						{% endfor %}
 
-						<!-- Pagination -->
-							<ul class="actions pagination">
-								<li><a href="" class="disabled button large previous">Previous Page</a></li>
-								<li><a href="#" class="button large next">Next Page</a></li>
-							</ul>
+
 
 					</div>
 
@@ -65,23 +63,6 @@
 								</header>
 							</section>
 
-						<!-- Mini Posts -->
-							<section>
-								<div class="mini-posts">
-
-									<!-- Mini Post -->
-										<article class="mini-post">
-											<header>
-												<h3><a href="single.html">Vitae sed condimentum</a></h3>
-												<time class="published" datetime="2015-10-20">October 20, 2015</time>
-												<a href="#" class="author"><img src="{{asset('assets/front/images/avatar.jpg')}}" alt="" /></a>
-											</header>
-											<a href="single.html" class="image"><img src="{{asset('assets/front/images/avatar.jpg')}}" alt="" /></a>
-										</article>
-
-								</div>
-							</section>
-
 						<!-- Posts List -->
 							<section>
 								<ul class="posts">
@@ -89,10 +70,10 @@
 									<li>
 										<article>
 											<header>
-												<h3><a href="single.html">{{ article.title }}</a></h3>
+												<h3><a href="{{ path('article_show', {'id': article.id})}}">{{ article.title }}</a></h3>
 												<time class="published" datetime="2015-10-20">{{ article.createdAt|date('j F,Y')}}</time>
 											</header>
-											<a href="single.html" class="image"><img src="{{asset('assets/front/images/avatar.jpg')}}" alt="" /></a>
+											<a href="single.html" class="image"><img src="{{asset('assets/front/images/clavier_mini.jpg')}}" alt="" /></a>
 										</article>
 									</li>
 										

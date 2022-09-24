@@ -39,9 +39,6 @@ class Article
     #[ORM\Column]
     private ?bool $published = null;
 
-    #[ORM\ManyToOne(inversedBy: 'articles')]
-    private ?User $user = null;
-
     public function __construct()
     {
         $this->comments = new ArrayCollection();
@@ -156,18 +153,6 @@ class Article
     public function setPublished(bool $published): self
     {
         $this->published = $published;
-
-        return $this;
-    }
-
-    public function getUser(): ?User
-    {
-        return $this->user;
-    }
-
-    public function setUser(?User $user): self
-    {
-        $this->user = $user;
 
         return $this;
     }

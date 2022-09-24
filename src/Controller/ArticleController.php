@@ -4,7 +4,6 @@ namespace App\Controller;
 
 use App\Entity\Article;
 use App\Entity\Comment;
-use App\Form\ArticleType;
 use App\Form\CommentType;
 use App\Repository\CommentRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -12,7 +11,6 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Doctrine\Persistence\ManagerRegistry;
-use Symfony\Component\HttpFoundation\RedirectResponse;
 
 class ArticleController extends AbstractController
 {
@@ -53,65 +51,4 @@ class ArticleController extends AbstractController
         ]);
     }
     
-    /**
-     * @Route("/article/new", name="article_new")
-     * @param Request ,ManagerRegistry
-     * @return Response
-     */
-
-    public function new(Request $request): Response
-    {
-        $article = new Article();
-        $form = $this->createForm(ArticleType::class, $article);
-
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $em = $this->doctrine->getManager();
-
-            $em->persist($article);
-            $em->flush();
-            return $this->redirectToRoute('home');
-        }
-        $status_login = $this->container->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_REMEMBERED');
-        return $this->render('article/new.html.twig', [
-            "form" => $form->createView(),
-            'status' => $status_login
-        ]);
-    }
-
-    /**
-     * @Route("article/{id}/edit", name="article_edit")
-     * @param Article
-     * @return Response
-     */
-    public function edit(Article $article, Request $request): Response
-    {
-        $form = $this->createForm(ArticleType::class, $article);
-
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid())
-        {
-            $em = $this->doctrinene->getManager();
-            $em->flush();
-            return $this->redirectToRoute('home');
-        }
-        return $this->render('article/edit.html.twig', [
-            "form" => $form->createView()
-        ]);
-    }
-
-        /**
-     * 
-     * @Route("article/{id}/delete", name="article_delete")
-     */
-
-    public function delete(Article $article): RedirectResponse
-    {
-        $em = $this->doctrine->getManager();
-        $em->remove($article);
-        $em->flush();
-        return $this->redirectToRoute('home');
-    }
 }

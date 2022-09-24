@@ -1,6 +1,12 @@
 {% extends "admin/base.html.twig" %}
 
 {% block body %}
+
+<style>
+  a{
+    color: white;
+  }
+</style>
         <!-- Begin Page Content -->
         <div class="container-fluid">
           <a href="{{ path('admin_new_article')}}" class="btn btn-outline-primary" >Ajouter un nouvelle article</a>
@@ -42,7 +48,7 @@
                   {% if article.published == true %}
                   <span class="badge badge-success rounded-pill d-inline">Active</span>
                   {% else %}
-                  <span class="badge badge-danger rounded-pill d-inline">Désactiver</span>
+                  <span class="badge badge-danger rounded-pill d-inline">Inactif</span>
                   {% endif %}
                 </td>
                 <td>{% for categorie in categories %}
@@ -52,14 +58,14 @@
                 {% endfor %}
                 </td>
                 <td>
-                  <button type="button" class="btn btn-link btn-sm btn-rounded">
+                  <a href="{{ path('article_edit', {'id' : article.id}) }}"  class="btn btn-outline-info">
                     Modifier
-                  </button>
+                  </a>
                 </td>
                 <td>
-                  <button type="button" class="btn btn-danger btn-sm btn-rounded">
+                  <a href="{{ path('article_delete',  {'id' : article.id})}}" class="btn btn-outline-danger" onclick="return confirm('tes sur')" >
                     Supprimer
-                  </button>
+                  </a>
                 </td>
               </tr>
               {% endfor %}
@@ -67,5 +73,6 @@
           </table>
           </div>
           <!-- /.container-fluid -->
+
 {% endblock body %}
 

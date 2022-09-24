@@ -6,12 +6,22 @@ use App\Entity\Article;
 use App\Form\ArticleType;
 use App\Repository\ArticleRepository;
 use App\Repository\CategoryRepository;
+use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 class AdminController extends AbstractController
 {
+
+    private $managerRegistry;
+
+    public function __construct(ManagerRegistry $managerRegistry)
+    {
+        $this->managerRegistry = $managerRegistry;
+    }
     /**
      * @Route("admin/home", name="admin_home")
      */
@@ -36,16 +46,52 @@ class AdminController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $em = $this->doctrine->getManager();
-
+            $em = $this->managerRegistry->getManager();
             $em->persist($article);
             $em->flush();
-            return $this->redirectToRoute('admin/home');
+            return $this->redirectToRoute('admin_home');
         }
         $status_login = $this->container->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_REMEMBERED');
+        // dd($this->container->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_REMEMBERED'));
         return $this->render('admin/article/new.html.twig', [
             "form" => $form->createView(),
             'status' => $status_login
-        ]);    }
+        ]);   
+    }
+
+    /**
+     * 
+     * @Route("admin/article/{id}/delete", name="article_delete")
+    */
+
+    public function delete(Article $article): RedirectResponse
+    {
+        $em = $this->managerRegistry->getManager();
+        $em->remove($article);
+        $em->flush();
+        return $this->redirectToRoute('admin_home');
+    }
+
+        /**
+     * @Route("admin/article/{id}/edit", name="article_edit")
+     * @param Article
+     * @return Response
+     */
+    public function edit(Article $article, Request $request): Response
+    {
+        $form = $this->createForm(ArticleType::class, $article);
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid())
+        {
+            $em = $this->managerRegistry->getManager();
+            $em->flush();
+            return $this->redirectToRoute('admin_home');
+        }
+        return $this->render('admin/article/edit.html.twig', [
+            "form" => $form->createView()
+        ]);
+    }
 }
 

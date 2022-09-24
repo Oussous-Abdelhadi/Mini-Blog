@@ -3,26 +3,23 @@
 
             <!-- Header -->
                 <header id="header">
-                    <h1><a href="{{ path('home')}}">Future Imperfect</a></h1>
+                    <h1><a href="{{ path('home')}}">Blog </a></h1>
                     <nav class="links">
                         <ul>
                             <li><a href="{{ path('home')}}">Accueil</a></li>
                             <li><a href="{{ path('about') }}">À propos</a></li>
-                            {% if status_login == true  %}
-                                <li><a href="{{ path('admin_home')}}">ADMIN</a></li>
-                            {% endif %}
-                            <li><a href="{{ path('register') }}">Inscritpion</a></li>
+                            {% if status_login == false  %}
                             <li><a href="{{ path('app_login') }}">Connexion</a></li>
+                            {% else %}
+                            <li><a href="{{ path('app_logout') }}" onclick="return confirm('Vous voulez vraiment vous déconnecter')">Déconnexion</a></li>
+                            {% endif %}
+                            {% if status_login == true  %}
+                                <li><a href="{{ path('admin_home')}}">Dashboard</a></li>
+                            {% endif %}
                         </ul>
                     </nav>
                     <nav class="main">
                         <ul>
-                            <li class="search">
-                                <a class="fa-search" href="#search">Search</a>
-                                <form id="search" method="get" action="#">
-                                    <input type="text" name="query" placeholder="Search" />
-                                </form>
-                            </li>
                             <li class="menu">
                                 <a class="fa-bars" href="#menu">Menu</a>
                             </li>
@@ -34,11 +31,11 @@
                 <section id="menu">
 
                     <!-- Search -->
-                        <section>
+                        {# <section>
                             <form class="search" method="get" action="#">
                                 <input type="text" name="query" placeholder="Search" />
                             </form>
-                        </section>
+                        </section> #}
 
                     <!-- Links -->
                         <section>
@@ -46,24 +43,31 @@
                                 <li>
                                     <a href="{{ path('home')}}">
                                         <h3>Accueil</h3>
+                                        <p>Retrouver tous les articles du blog</p>
                                     </a>
                                 </li>
-                                <li><a href="{{ path('about') }}">À propos</a></li>
-                                <li><a href="{{ path('register') }}">Inscritpion</a></li>
                                 <li>
-                                    <a href="#">
-                                        <h3>Etiam sed consequat</h3>
-                                        <p>Porta lectus amet ultricies</p>
+                                    <a href="{{ path('home')}}">
+                                        <h3>À propos</h3>
+                                        <p>En savoir d'avantage sur moi</p>
                                     </a>
                                 </li>
                             </ul>
                         </section>
 
                     <!-- Actions -->
-                        <section>
-                            <ul class="actions stacked">
-                                <li><a href="{{ path('app_login') }}" class="button large fit">Connexion</a></li>
-                            </ul>
-                        </section>
+                    {% if status_login == true  %}
+                    <section>
+                        <ul class="actions stacked">
+                            <li><a href="{{ path('app_logout') }}" class="button large fit">Déconnexion</a></li>
+                        </ul>
+                    </section>
+                    {% else %}
+                    <section>
+                        <ul class="actions stacked">
+                            <li><a href="{{ path('app_login') }}" class="button large fit">Connexion</a></li>
+                        </ul>
+                    </section>
+                    {% endif %}
 
                 </section>

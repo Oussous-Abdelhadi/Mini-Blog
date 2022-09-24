@@ -20,7 +20,8 @@ class SecurityController extends AbstractController
         $error = $authenticationUtils->getLastAuthenticationError();
         // last username entered by the user
         $lastUsername = $authenticationUtils->getLastUsername();
-        return $this->render('security/login.html.twig', ['last_username' => $lastUsername, 'error' => $error]);
+        $status_login = $this->container->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_REMEMBERED');
+        return $this->render('security/login.html.twig', ['last_username' => $lastUsername, 'error' => $error, 'status_login' => $status_login]);
     }
 
     #[Route(path: '/logout', name: 'app_logout')]

@@ -24,9 +24,8 @@ class ArticleType extends AbstractType
             ])
             ->add('description', TextareaType::class,[
                 "attr" => [
-                    "class" => "form-control",
-                "label" => "Publier"
-                ]
+                    "class" => "form-control"
+                ],
             ])
             ->add('url', UrlType::class, [
                 "attr" => [
@@ -40,6 +39,8 @@ class ArticleType extends AbstractType
                 "required" => false,
                 "label" => "Publier"
             ])
+
+            ->add('category')
         ;
     }
 
