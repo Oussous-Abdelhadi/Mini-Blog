@@ -7,14 +7,13 @@
                     <nav class="links">
                         <ul>
                             <li><a href="{{ path('home')}}">Accueil</a></li>
-                            <li><a href="{{ path('about') }}">À propos</a></li>
+                            {% if status_login == true  %}
+                                <li><a href="{{ path('admin_home')}}">Dashboard</a></li>
+                            {% endif %}
                             {% if status_login == false  %}
                             <li><a href="{{ path('app_login') }}">Connexion</a></li>
                             {% else %}
                             <li><a href="{{ path('app_logout') }}" onclick="return confirm('Vous voulez vraiment vous déconnecter')">Déconnexion</a></li>
-                            {% endif %}
-                            {% if status_login == true  %}
-                                <li><a href="{{ path('admin_home')}}">Dashboard</a></li>
                             {% endif %}
                         </ul>
                     </nav>
@@ -44,12 +43,6 @@
                                     <a href="{{ path('home')}}">
                                         <h3>Accueil</h3>
                                         <p>Retrouver tous les articles du blog</p>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="{{ path('home')}}">
-                                        <h3>À propos</h3>
-                                        <p>En savoir d'avantage sur moi</p>
                                     </a>
                                 </li>
                             </ul>
