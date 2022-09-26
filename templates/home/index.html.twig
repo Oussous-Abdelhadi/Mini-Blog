@@ -20,9 +20,6 @@
 									<a href="#" class="author"><span class="name">Abdelhadi</span><img src=" {{asset('assets/front/images/luffy.jpg')}}" alt="" /></a>
 								</div>
 							</header>
-								<a href="{{ path('article_show', {'id': article.id})}}" class="image featured">
-									<img src="{{asset('assets/front/images/clavier.jpg')}}" alt="" />
-								</a>
 							<p>{{article.description|slice(0, 230)}}...</p>
 							<footer>
 								<ul class="actions">
@@ -56,12 +53,12 @@
 								<a href="#" class="logo"><img src="{{asset('assets/front/images/logo.png')}}" alt="" /></a>
 								<header>
 									<h2>Blog</h2>
-									<p>Another fine responsive site template by <a href="http://html5up.net">HTML5 UP</a></p>
 								</header>
 							</section>
 
 						<!-- Posts List -->
 							<section>
+								<h3>Tout les articles</h3>
 								<ul class="posts">
 									{% for article in articles %}
 									<li>
@@ -70,7 +67,6 @@
 												<h3><a href="{{ path('article_show', {'id': article.id})}}">{{ article.title }}</a></h3>
 												<time class="published" datetime="2015-10-20">{{ article.createdAt|date('j F,Y')}}</time>
 											</header>
-											<a href="single.html" class="image"><img src="{{asset('assets/front/images/clavier_mini.jpg')}}" alt="" /></a>
 										</article>
 									</li>
 										

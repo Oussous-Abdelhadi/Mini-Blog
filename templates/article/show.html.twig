@@ -3,36 +3,15 @@
     {{ article.title }}
 {% endblock title %}
 
+{% block stylesheets %}
+{# <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css"> #}
+    <link rel="stylesheet" href="{{ asset('assets/front/css/main.css')}}" />
+    <link rel="stylesheet" href="{{ asset('assets/front/css/show_article.css')}}" />
+{# <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css"> #}
+<script src="https://kit.fontawesome.com/e9f99aff74.js" crossorigin="anonymous"></script>
+{% endblock %}
+
 {% block body %}
-<style>
-.container {
-  position: relative;
-  overflow: hidden;
-  width: 80%;
-  padding-top: 50%; /* 16:9 Aspect Ratio (divide 9 by 16 = 0.5625) */
-}
-
-/* Then style the iframe to fit in the container div with full height and width */
-.responsive-iframe {
-  position: absolute;
-  top: 0;
-  left: 0;
-  bottom: 0;
-  right: 0;
-  width: 100%;
-  height: 100%;
-}
-
-.comment__content{grid-area:content}
-.comment__content p{white-space:pre-wrap}
-
-.comment-list > * + * {
-    margin-top: calc(5 * var(--space));
-}
-.comments__title + * {
-    margin-top: calc(2 * var(--space));
-}
-</style>
 
 
 <div id="main">
@@ -50,17 +29,24 @@
         <br>
         <button type="submit">ENVOYER</button>
     {{form_end(form)}}
-    <hr style="margin: 2em;">
-    <div class="comment-list">
-        {% for comment in comments %}
-            <h3 style="font-weight: bold;">{{ comment.username }}</h3>
-            <p class="published">publié le {{ comment.createdAt|date("j F,Y") }}</p>
-            <div class="comment__content">
-                <p>{{ comment.content }}</p>
-            </div>
-        {% endfor %}
-    </div>
 
+    {# Commentaires #}
+    <div class="comment-list">
+        <div class="user-comment">
+            <div class="comments-section">
+                    {% for comment in comments %}
+            <div class="comment-post">
+                    <div class="comment-img"><img src="{{asset('assets/front/images/default.png')}}"/>
+                    </div>
+                    <div class="comment-details">
+                        <p><span class="comment-author" id="user">{{ comment.username }}</span><span class="comment-time">publié le {{ comment.createdAt|date("j F,Y") }}</span></p>
+                        <p class="comment-content">{{ comment.content }}</p>
+                    </div>
+            </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
 </div>
 {% endblock body %}
 

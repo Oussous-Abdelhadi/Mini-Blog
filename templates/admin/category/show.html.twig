@@ -1,0 +1,52 @@
+{% extends "admin/base.html.twig" %}
+
+{% block title %}
+  Catégories
+{% endblock title %}
+
+
+{% block body %}
+
+    <div class="container-fluid">
+      <div class="d-sm-flex align-items-center justify-content-between mb-4">
+        <h1 class="h3 mb-0 text-gray-800">Catégories</h1>
+      </div>
+        <a href="{{ path('category_new')}}" class="btn btn-outline-primary" >Ajouter une nouvelle categorie</a>
+        <table class="table align-middle mb-0 bg-white">
+          <thead class="bg-light">
+            <tr>
+              <th>Nom</th>
+              <th>Modification</th>
+              <th>Supprimer</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for categorie in categories %}
+              
+            <tr>
+              <td>
+                <div class="d-flex align-items-center">
+
+                  <div class="ms-3">
+                    <p class="fw-bold mb-1">{{ categorie.name }}</p>
+                  </div>
+                </div>
+              </td>
+              <td>
+                <a href="{{ path('category_edit', {'id' : categorie.id}) }}" class="btn btn-outline-info">
+                  Modifier
+                </a>
+              </td>
+              <td>
+                <a href="{{ path('category_delete', {'id' : categorie.id}) }}" class="btn btn-outline-danger" onclick="return confirm('Vous êtes sur de vouloir supprimer cet élément?')" >
+                  Supprimer
+                </a>
+              </td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+        </div>
+        <!-- /.container-fluid -->
+
+{% endblock body %}
