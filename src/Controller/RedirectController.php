@@ -25,4 +25,13 @@ class RedirectController extends AbstractController
     {
         return $this->redirect('https://www.youtube.com/channel/UCuGOKp0vFAaNJce-PT97D6g');
     }
+
+    /**
+     * @Route("website", name="website")
+     */
+
+    public function website()
+    {
+        return $this->redirect('https://www.abdelhadioussous.tk/');
+    }
 }
